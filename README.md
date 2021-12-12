@@ -3,6 +3,9 @@
 ## Gitee 地址
 [https://gitee.com/rayleighvickecn/dict](https://gitee.com/rayleighvickecn/dict)
 
+## github 地址
+[https://github.com/rayleighzhao/dict](https://github.com/rayleighzhao/dict)
+
 ## 简介
 管理下拉列表的函数: customOwnKeys<br>
 管理过滤器用到三个函数: mapDictFilter、mapAsyncDictFilter、mapAsyncDictInit
