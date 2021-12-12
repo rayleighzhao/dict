@@ -142,7 +142,7 @@ computed: {
 ## mapDictFilter
 vue2用法
 ```html
-<td>{{status | status2}}<td>
+<td>{{item.status | status2}}<td>
 ```
 ```javascript
 filters: {
@@ -151,7 +151,7 @@ filters: {
 ```
 vue3用法
 ```html
-<td>{{status2(status)}}<td>
+<td>{{status2(item.status)}}<td>
 ```
 ```javascript
 methods: {
