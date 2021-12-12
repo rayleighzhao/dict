@@ -249,7 +249,7 @@ mounted: mapAsyncDictInit([{dictName: 'asyncStatus5', asyncName: 'setAsyncStatus
 })
 ```
 
-### customOwnKeys 源码
+## customOwnKeys 源码
 @/utils/index.js
 ```javascript
 export function customOwnKeys(obj, config) {
@@ -270,7 +270,7 @@ export function customOwnKeys(obj, config) {
 }
 ```
 
-### mapDictFilter、mapAsyncDictFilter、mapAsyncDictInit 源码
+## mapDictFilter、mapAsyncDictFilter、mapAsyncDictInit 源码
 vue2 和 vue3 只是 $getObj 部分不同<br>
 @/filters/dict.js
 ```javascript
