@@ -280,13 +280,26 @@ vue2 和 vue3 只是 $getObj 部分不同<br>
 import store from '@/store'
 import { isFunc } from '@/utils'
 
-const $dict = { ...store.state.dict, ...store.getters.dict }
+const $state = store.state
+const $getters = store.getters
 const $dispatch = store.dispatch
-const $isGetter = key => Boolean(store.getters && store.getters.dict && store.getters.dict[key])
-const $keyName = key => `$store.${$isGetter(key) ? 'getters' : 'state'}.dict.${key}`
+const $dict = dictName => {
+  if($state.dict && $state.dict[dictName]) {
+    return $state.dict[dictName]
+  } else if($getters[`dict/${dictName}`]) {
+    return $getters[`dict/${dictName}`]
+  }
+}
+const $keyName = dictName => {
+  if($state.dict && $state.dict[dictName]) {
+    return `$store.state.dict.${dictName}`
+  } else if($getters[`dict/${dictName}`]) {
+    return `$store.getters.dict/${dictName}`
+  }
+}
 // vue2
-const $getObj = that => that.$options.filters 
-// vue3
+const $getObj = that => that.$options.filters
+// // vue3
 // const $getObj = that => that
 
 function commonFilter(dictName) {
@@ -316,7 +329,7 @@ function commonMap(func, keyFunc) {
   }
 }
 
-export const mapDictFilter = commonMap( key => commonFilter($dict[key]) )
+export const mapDictFilter = commonMap( key => commonFilter($dict(key)) )
 
 export const mapAsyncDictFilter = commonMap( key => commonAsyncFilter(key), key => $keyName(key))
 
@@ -324,7 +337,7 @@ export function mapAsyncDictInit(arr, callback) {
   return function init() {
     const promises = arr.map(({ dictName, asyncName }) => new Promise(resolve => {
       const obj = $getObj(this)
-      obj[dictName] = commonFilter($dict[dictName])
+      obj[dictName] = commonFilter($dict(dictName))
       this.$watch($keyName(dictName), commonAsyncFilter(dictName, resolve))
       $dispatch(`dict/${asyncName}`)
     }))
