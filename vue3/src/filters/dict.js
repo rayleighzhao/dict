@@ -36,20 +36,19 @@ function commonAsyncFilter(key, callback) {
   }
 }
 
-function commonMap(func, keyFunc) {
+function commonMap(keyFunc, func) {
   return function map(arr) {
     const returnObj = {}
     arr.forEach(key => {
-      const keyName = keyFunc && isFunc(keyFunc) ? keyFunc(key) : key
-      returnObj[keyName] = func(key)
+      returnObj[keyFunc(key)] = func(key)
     })
     return returnObj
   }
 }
 
-export const mapDictFilter = commonMap( key => commonFilter($dict(key)) )
+export const mapDictFilter = commonMap( key => key, key => commonFilter($dict(key)) )
 
-export const mapAsyncDictFilter = commonMap( key => commonAsyncFilter(key), key => $keyName(key))
+export const mapAsyncDictFilter = commonMap( key => $keyName(key), key => commonAsyncFilter(key) )
 
 export function mapAsyncDictInit(arr, callback) {   
   return function init() {
