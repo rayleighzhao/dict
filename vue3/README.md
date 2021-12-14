@@ -22,6 +22,7 @@ export function customOwnKeys(obj, config) {
     }
   })
 }
+customOwnKeys.ID = Symbol.for('customOwnKeys')
 ```
 
 ### mapDictFilter、mapAsyncDictFilter、mapAsyncDictInit 源码
@@ -82,6 +83,7 @@ export const mapAsyncDictFilter = commonMap( key => commonAsyncFilter(key), key 
 
 export function mapAsyncDictInit(arr, callback) {   
   return function init() {
+    const length = arr.length
     const promises = arr.map(({ dictName, asyncName }) => new Promise(resolve => {
       const obj = $getObj(this)
       obj[dictName] = commonFilter($dict(dictName))
@@ -99,7 +101,7 @@ export function mapAsyncDictInit(arr, callback) {
       const result = Promise.all(promises)
       if(isFunc(pop)) {
         result
-        .then(arr => arr[promises.length -1])
+        .then(datas => datas[length])
         .then(pop.bind(this))
       }
     }
